@@ -2,9 +2,9 @@ from flask import Flask, jsonify, request, render_template
 from transformers import MarianMTModel, MarianTokenizer
 
 # Carica il modello1 e il tokenizer
-model_name1 = 'Helsinki-NLP/opus-mt-tc-big-en-it'
-tokenizer = MarianTokenizer.from_pretrained(model_name1)
-model1 = MarianMTModel.from_pretrained(model_name1)
+model_name = 'Helsinki-NLP/opus-mt-tc-big-it-en'
+tokenizer = MarianTokenizer.from_pretrained(model_name)
+model = MarianMTModel.from_pretrained(model_name)
 
 app = Flask(__name__)
 
@@ -13,14 +13,13 @@ def home():
     return render_template('index.html')
 
 @app.route('/translate', methods=['POST'])
-def submit():
-    source = request.form['source']
-    src_text = [source]
-    print (f'{source}')
-    translated = model1.generate(**tokenizer(src_text, return_tensors="pt", padding=True))
-    out_text1 = tokenizer.decode(translated[0], skip_special_tokens=True)
-    return f"<b>Source:</b> {source} <BR/<BR/><b>Translation:</b> {out_text1} <BR/>"
-
+def translate():
+    data = request.get_json()
+    sentences = data['sentences']
+    print (sentences)
+    translated = model.generate(**tokenizer(sentences, return_tensors="pt", padding=True))
+    translated_sentences = [tokenizer.decode(t, skip_special_tokens=True) for t in translated]
+    return jsonify(translated_sentences)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0') 
