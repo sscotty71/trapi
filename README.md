@@ -5,7 +5,7 @@ This is a simple example to make translations using a local model. The model is 
 
 To start let's execute
 
-pip install -r requirements.txt
+``pip install -r requirements.txt``
 
 to import 
 
@@ -16,7 +16,7 @@ to import
 
 And then let's execute 
 
-python trapi.py
+``python trapi.py``
 
 to start our api running on our localhost at port 5000.
 
