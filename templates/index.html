@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style> 
+        textarea {
+          width: 100%;
+          height: 150px;
+          padding: 12px 20px;
+          box-sizing: border-box;
+          border: 2px solid #ccc;
+          border-radius: 4px;
+          background-color: #f8f8f8;
+          font-size: 16px;
+        }
+
+                /* Stile di base per il pulsante */
+        button {
+            background-color: #4CAF50; /* Verde */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px; /* Angoli arrotondati */
+        }
+
+        /* Stile per il pulsante al passaggio del mouse */
+        button:hover {
+            background-color: #45a049; /* Verde più scuro */
+        }
+
+        </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translations</title>
+</head>
+<body>
+    <h1>Source:</h1>
+    <form id="translationForm">
+        <textarea id="textInput" rows="50" cols="50" placeholder="Inserisci le frasi qui..."></textarea><br>
+        <button type="button" onclick="translateText()">Traduci</button>
+    </form>
+    <h2>Translation:</h2>
+    <div id="translatedText"></div>
+
+    <script>
+        async function translateText() {
+            const text = document.getElementById("textInput").value;
+            const sentences = text.split('.'); 
+
+            const response = await fetch('http://localhost:5000/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sentences: sentences })
+            });
+
+            const translatedSentences = await response.json();
+            displayTranslations(translatedSentences);
+        }
+
+        function displayTranslations(translations) {
+            const translatedTextDiv = document.getElementById("translatedText");
+            translatedTextDiv.innerHTML = ""; 
+            translations.forEach(sentence => {
+                const p = document.createElement("p");
+                p.textContent = sentence;
+                translatedTextDiv.appendChild(p);
+            });
+        }
+    </script>
+</body>
+</html>
