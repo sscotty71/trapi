@@ -52,7 +52,7 @@
     <script>
         async function translateText() {
             const text = document.getElementById("textInput").value;
-            const sentences = text.split('.'); // Divide il testo in frasi separate da nuove righe
+            const sentences = text.split('.'); 
 
             const response = await fetch('http://localhost:5000/translate', {
                 method: 'POST',
@@ -68,7 +68,7 @@
 
         function displayTranslations(translations) {
             const translatedTextDiv = document.getElementById("translatedText");
-            translatedTextDiv.innerHTML = ""; // Pulisce il contenuto precedente
+            translatedTextDiv.innerHTML = ""; 
             translations.forEach(sentence => {
                 const p = document.createElement("p");
                 p.textContent = sentence;

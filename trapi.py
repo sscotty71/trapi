@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request, render_template
 from transformers import MarianMTModel, MarianTokenizer
 
 # Load model
-model_name = 'Helsinki-NLP/opus-mt-tc-big-en-it' # english -> italian
-#model_name = 'Helsinki-NLP/opus-mt-tc-big-en-fr' # english -> french
+#model_name = 'Helsinki-NLP/opus-mt-tc-big-en-it' # english -> italian
+model_name = 'Helsinki-NLP/opus-mt-tc-big-en-fr' # english -> french
 #model_name = 'Helsinki-NLP/opus-mt-tc-big-en-es' # english -> spanish
 tokenizer = MarianTokenizer.from_pretrained(model_name)
 model = MarianMTModel.from_pretrained(model_name)
